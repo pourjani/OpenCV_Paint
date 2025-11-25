@@ -1,0 +1,90 @@
+import cv2
+import numpy as np
+from datetime import datetime
+
+
+W, H = 1000, 700
+win = "OpenCV Paint"
+
+canvas = np.ones((H, W, 3), dtype=np.uint8) * 255  
+
+drawing = False
+last_pt = None
+mode = "brush"   
+
+def nothing(x): 
+    pass
+
+def mouse(event, x, y, flags, param):
+    global drawing, last_pt, canvas, mode
+    
+    if event == cv2.EVENT_LBUTTONDOWN:
+        drawing = True
+        last_pt = (x, y)
+
+    elif event == cv2.EVENT_MOUSEMOVE and drawing:
+        size = cv2.getTrackbarPos("Size", win)
+
+        if mode == "eraser":
+            color = (255, 255, 255)  # white
+        else:
+            r = cv2.getTrackbarPos("R", win)
+            g = cv2.getTrackbarPos("G", win)
+            b = cv2.getTrackbarPos("B", win)
+            color = (b, g, r)         
+        curr_pt = (x, y)
+
+        
+        cv2.line(canvas, last_pt, curr_pt, color, size, lineType=cv2.LINE_AA)
+        last_pt = curr_pt
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        drawing = False
+        last_pt = None
+
+
+cv2.namedWindow(win)
+cv2.setMouseCallback(win, mouse)
+
+cv2.createTrackbar("R", win, 0, 255, nothing)
+cv2.createTrackbar("G", win, 0, 255, nothing)
+cv2.createTrackbar("B", win, 0, 255, nothing)
+cv2.createTrackbar("Size", win, 5, 60, nothing)
+
+print("Controls:")
+print("  b = brush mode")
+print("  e = eraser mode")
+print("  c = clear canvas")
+print("  s = save image")
+print("  q or ESC = quit")
+
+
+while True:
+   
+    display = canvas.copy()
+    cv2.putText(display, f"Mode: {mode}", (10, 30),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 2, cv2.LINE_AA)
+
+    cv2.imshow(win, display)
+
+    key = cv2.waitKey(1) & 0xFF
+
+    if key == 27 or key == ord('q'):   
+
+    elif key == ord('b'):
+        mode = "brush"
+
+    elif key == ord('e'):
+        mode = "eraser"
+
+    elif key == ord('c'):
+        canvas[:] = 255  
+
+    elif key == ord('s'):
+        filename = f"paint_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+        cv2.imwrite(filename, canvas)
+        print("Saved:", filename)
+
+cv2.destroyAllWindows()
+
+
