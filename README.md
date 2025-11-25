@@ -19,7 +19,11 @@ Draw on a white canvas using your mouse, change brush **color** and **size** wit
 - ⌨️ Simple keyboard controls
 
 ---
+## Demo
 
+![OpenCV Paint Demo](images/demo.jpg)
+
+---
 ## Requirements
 
 - Python 3.7+
@@ -30,3 +34,7 @@ Install dependencies:
 
 ```bash
 pip install opencv-python numpy
+
+
+
+
