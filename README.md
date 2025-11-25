@@ -21,7 +21,7 @@ Draw on a white canvas using your mouse, change brush **color** and **size** wit
 ---
 ## Demo
 
-![OpenCV Paint Demo](images/demo.jpg)
+![OpenCV Paint Demo](Images/demo.jpg)
 
 ---
 ## Requirements
