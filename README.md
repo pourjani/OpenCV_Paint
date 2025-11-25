@@ -17,6 +17,19 @@ Draw on a white canvas using your mouse, change brush **color** and **size** wit
 - 🧼 Clear canvas
 - 💾 Save drawing to PNG with timestamp
 - ⌨️ Simple keyboard controls
+- 🟦 **NEW:** Live color preview box showing the current brush color
+
+---
+
+## New Update (v1)
+
+### Live Color Preview
+A small square is displayed on the top-left of the window that always shows the **current brush color** selected from the RGB trackbars.  
+This makes it easier to see the exact color before drawing, especially when switching between brush and eraser.
+
+**How it works (in code):**
+- The program reads current R/G/B values every frame.
+- It draws a filled rectangle using that color on a copy of the canvas (`display`), so the preview does **not** affect your drawing.
 
 ---
 ## Demo
